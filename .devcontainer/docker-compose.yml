@@ -22,6 +22,9 @@ services:
     # Pinned for a consistent cohort experience. Bump deliberately between cohorts.
     image: bkimminich/juice-shop:v20.0.0
     restart: unless-stopped
+    # Publish to the Codespace host so the browser port-forward (port 3000) appears automatically.
+    ports:
+      - "3000:3000"
     networks:
       lab:
         aliases:

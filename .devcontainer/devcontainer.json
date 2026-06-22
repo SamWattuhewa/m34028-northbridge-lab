@@ -4,10 +4,10 @@
   "service": "workspace",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
-  // Forward the TARGET service's port 3000 to your browser.
-  "forwardPorts": ["northbridge:3000"],
+  // The target publishes port 3000 to the Codespace host (see docker-compose.yml); forward it.
+  "forwardPorts": [3000],
   "portsAttributes": {
-    "northbridge:3000": {
+    "3000": {
       "label": "NorthBridge (Juice Shop)",
       "onAutoForward": "openBrowser"
     }
