@@ -18,7 +18,8 @@ in your browser, with nothing installed on the lab PC:
 
 1. Click **Code ▸ Codespaces ▸ Create codespace on main** (or open the Classroom assignment link).
 2. Wait for the container to build. When it finishes you'll see a **port 3000** notification — click
-   **Open in Browser**. That tab is **your NorthBridge web app**.
+   **Open in Browser**. (GitHub shows a one-time *"You are about to access a development port…"*
+   page — this is normal; click **Continue**.) That tab is **your NorthBridge web app**.
 3. In the **Terminal** (your attacker box), confirm the target is reachable:
 
    ```bash
