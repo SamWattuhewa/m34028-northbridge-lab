@@ -19,8 +19,8 @@ services:
       - northbridge
 
   northbridge:
-    # Pin a version for a consistent cohort experience, e.g. bkimminich/juice-shop:v17.3.0
-    image: bkimminich/juice-shop:latest
+    # Pinned for a consistent cohort experience. Bump deliberately between cohorts.
+    image: bkimminich/juice-shop:v20.0.0
     restart: unless-stopped
     networks:
       lab:
