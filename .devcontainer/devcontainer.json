@@ -13,6 +13,11 @@
     }
   },
 
+  // sshd allows remote (desktop VS Code / CLI) access and management of the box.
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": {}
+  },
+
   "customizations": {
     "vscode": {
       "extensions": []
