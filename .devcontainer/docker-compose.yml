@@ -1,0 +1,32 @@
+# M34028 NorthBridge lab — two services on one private network:
+#   workspace  = your attacker box (nmap, whois, dig, curl) — you work here
+#   northbridge = the authorised target (OWASP Juice Shop) on port 3000
+#
+# From the workspace terminal the target is reachable by hostname: `northbridge`
+#   nmap -sV northbridge      curl http://northbridge:3000
+services:
+  workspace:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    init: true
+    command: sleep infinity
+    volumes:
+      - ../..:/workspaces:cached
+    networks:
+      - lab
+    depends_on:
+      - northbridge
+
+  northbridge:
+    # Pin a version for a consistent cohort experience, e.g. bkimminich/juice-shop:v17.3.0
+    image: bkimminich/juice-shop:latest
+    restart: unless-stopped
+    networks:
+      lab:
+        aliases:
+          - northbridge
+
+networks:
+  lab:
+    driver: bridge

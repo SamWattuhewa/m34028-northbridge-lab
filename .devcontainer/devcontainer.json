@@ -1,0 +1,24 @@
+{
+  "name": "NorthBridge Pen-Test Lab (M34028)",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  // Forward the TARGET service's port 3000 to your browser.
+  "forwardPorts": ["northbridge:3000"],
+  "portsAttributes": {
+    "northbridge:3000": {
+      "label": "NorthBridge (Juice Shop)",
+      "onAutoForward": "openBrowser"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": []
+    }
+  },
+
+  // Confirms tooling is present and the target is up when the Codespace finishes building.
+  "postCreateCommand": "nmap --version && echo '---' && echo 'Lab ready. Authorised target host: northbridge (port 3000). Try: nmap -sV northbridge'"
+}
