@@ -13,6 +13,7 @@ RUN apt-get update \
       net-tools \
       iputils-ping \
       jq \
+      socat \
       ca-certificates \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*

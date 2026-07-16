@@ -4,12 +4,14 @@
   "service": "workspace",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
-  // The target publishes port 3000 to the Codespace host (see docker-compose.yml); forward it.
+  // Juice Shop runs in the SEPARATE `northbridge` service, so it is not on the workspace's own
+  // localhost. The postStartCommand bridge below makes it appear on the workspace's localhost:3000
+  // so this forward always has a real listener behind it (fixes the browser 404).
   "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
       "label": "NorthBridge (Juice Shop)",
-      "onAutoForward": "openBrowser"
+      "onAutoForward": "notify"
     }
   },
 
@@ -25,5 +27,10 @@
   },
 
   // Confirms tooling is present and the target is up when the Codespace finishes building.
-  "postCreateCommand": "nmap --version && echo '---' && echo 'Lab ready. Authorised target host: northbridge (port 3000). Try: nmap -sV northbridge'"
+  "postCreateCommand": "nmap --version && echo '---' && echo 'Lab ready. Authorised target host: northbridge (port 3000). Try: nmap -sV northbridge'",
+
+  // Runs on every start/resume. Bridges the workspace's own localhost:3000 to the target so the
+  // forwarded port serves Juice Shop in the browser. socat re-resolves `northbridge` per connection,
+  // so it is fine even while Juice Shop is still booting (just reload the page).
+  "postStartCommand": "nohup socat TCP-LISTEN:3000,fork,reuseaddr TCP:northbridge:3000 >/tmp/nb-bridge.log 2>&1 & disown; echo 'NorthBridge browser bridge listening on :3000 (open the forwarded port; reload if Juice Shop is still starting)'"
 }

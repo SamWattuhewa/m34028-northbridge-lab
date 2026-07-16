@@ -22,9 +22,12 @@ services:
     # Pinned for a consistent cohort experience. Bump deliberately between cohorts.
     image: bkimminich/juice-shop:v20.0.0
     restart: unless-stopped
-    # Publish to the Codespace host so the browser port-forward (port 3000) appears automatically.
-    ports:
-      - "3000:3000"
+    # Target listens on 3000 inside the lab network (reachable as `northbridge:3000`).
+    # The browser reaches it via the workspace bridge (see devcontainer.json postStartCommand),
+    # NOT a host publish — host-published ports from a non-primary service are not reliably
+    # auto-forwarded by Codespaces, which silently broke browser access.
+    expose:
+      - "3000"
     networks:
       lab:
         aliases:
